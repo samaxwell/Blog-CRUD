@@ -1,7 +1,6 @@
 package com.blog.crud;
 
 import java.util.Arrays;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -21,12 +20,11 @@ public class SeedData {
 	
 	@PostConstruct
 	public void addSeedData() {
-		List<Blog> blogs = Arrays.asList(
-				new Blog("Spring Config Server", "How to setup Spring Cloud config"),
-				new Blog("Angular Guide", "Testing in Angular made simple!"),
-				new Blog("Zuul Notes", "How to map routes in Netflix's Zuul"));
-		
-		blogs.forEach(b -> repository.save(b));
+		Arrays.asList(
+				new Blog("Spring Config Server", "How to setup Spring Cloud config", "Sean Maxwell"),
+				new Blog("Angular Guide", "Testing in Angular made simple!", "Sean Maxwell"),
+				new Blog("Zuul Notes", "How to map routes in Netflix's Zuul", "Sean Maxwell"))
+		.forEach(b -> repository.save(b));
 	}
 
 }
