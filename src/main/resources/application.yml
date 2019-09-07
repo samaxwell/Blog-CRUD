@@ -4,8 +4,9 @@ spring:
          enabled: true
          path: /h2-console
          
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: *
+management:
+  endpoints:
+    web:
+      exposure:
+         include: refresh, info
+        
