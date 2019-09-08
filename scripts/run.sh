@@ -9,4 +9,6 @@ echo ">>>>>>>>>>>> Configuration Server has started"
 echo "********************************************************"
 echo "Starting blog service "
 echo "********************************************************"
-java -jar /usr/local/app/BlogCrud-0.0.1.jar
+java -Dspring.cloud.config.uri=$CONFIGSERVER_URI \
+	 -Dspring.profiles.active=$PROFILE \
+	 -jar /usr/local/app/BlogCrud-0.0.1.jar
