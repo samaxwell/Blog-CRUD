@@ -3,11 +3,11 @@ spring:
     name: blogcrud
 
   profiles:
-    active:
-      default
+    active: dev
 
   cloud:
     config:
-      uri: http://localhost:8888
+      label: 'develop'
+      uri: 'http://localhost:8888'
 #      fail-fast: true
 
