@@ -1,13 +1,13 @@
 spring:
   application:
-    name: blogcrud
+    name: 'blogcrud'
 
   profiles:
-    active: dev
+    active: 'dev'
 
   cloud:
     config:
-      label: 'develop'
+#      label: 'develop'
       uri: 'http://localhost:8888'
 #      fail-fast: true
 
