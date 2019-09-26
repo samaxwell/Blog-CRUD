@@ -1,4 +1,4 @@
-package com.blog.crud.crontrollers;
+package com.blog.crud.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;

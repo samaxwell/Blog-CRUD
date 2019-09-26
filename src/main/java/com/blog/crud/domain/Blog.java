@@ -29,11 +29,9 @@ public class Blog {
 	@Column(name = "blog_id", nullable = false)
 	private Long id;
 	
-	// TODO - fix createdAt
 	@CreatedDate
     private Date createdAt;
 	
-	// TODO - fix lastModifiedDate
 	@LastModifiedDate
     private Date modifiedAt;
 	
@@ -41,14 +39,14 @@ public class Blog {
 	private String title;
 	
 	@Column(name = "description", nullable = false)
-	private String description;
+	private String contents;
 	
 	@Column(name = "author", nullable = false)
 	private String author;
 
-	public Blog(String title, String description, String author) {
+	public Blog(String title, String contents, String author) {
 		this.title = title;
-		this.description = description;
+		this.contents = contents;
 		this.author = author;
 	}
 
