@@ -7,12 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import lombok.extern.slf4j.Slf4j;
 
-@SpringBootApplication
-@RefreshScope
 @Slf4j
+@RefreshScope
+@EnableJpaAuditing
+@SpringBootApplication
 public class BlogCrudApplication {
 
 	public static void main(String[] args) {

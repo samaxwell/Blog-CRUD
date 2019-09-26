@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component;
 
 import com.blog.crud.domain.Blog;
 import com.blog.crud.repositories.BlogRepository;
+import com.blog.crud.utils.Constants;
 
-@Profile("default")
+@Profile({ 
+	Constants.DEV_PROFILE, 
+	Constants.DEFAULT_PROFILE})
 @Component
 public class SeedData {
 	
@@ -20,11 +23,18 @@ public class SeedData {
 	
 	@PostConstruct
 	public void addSeedData() {
+
+		System.out.println("/-------------------/\n  Loading seed data\n/-------------------/");
+
 		Arrays.asList(
 				new Blog("Spring Config Server", "How to setup Spring Cloud config", "Sean Maxwell"),
 				new Blog("Angular Guide", "Testing in Angular made simple!", "Sean Maxwell"),
 				new Blog("Zuul Notes", "How to map routes in Netflix's Zuul", "Sean Maxwell"))
-		.forEach(b -> repository.save(b));
+		.forEach(b -> {
+			
+			System.out.println(" \t" + b);
+			repository.save(b);
+		});
 	}
 
 }
