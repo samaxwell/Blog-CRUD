@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.assertj.core.util.Arrays;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class ExceptionController {
 	 * readable
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	protected ResponseEntity<Object> handleMethodArgumentNotValidException(
+	protected ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(
 													MethodArgumentNotValidException e, 
 													WebRequest webRequest) {
 
@@ -29,21 +28,38 @@ public class ExceptionController {
 				.map(DefaultMessageSourceResolvable::getDefaultMessage)
 				.collect(Collectors.toList());
 		
-		return new ResponseEntity<Object>(
+		return new ResponseEntity<ErrorMessage>(
 				new ErrorMessage(messages, webRequest.getDescription(false)),
 				HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(UnsatisfiedConstraint.class)
-	protected ResponseEntity<Object> handleUnsatisfiedConstraintException(
+	protected ResponseEntity<ErrorMessage> handleUnsatisfiedConstraintException(
 													UnsatisfiedConstraint e,
 													WebRequest webRequest) {
+
+		return new ResponseEntity<ErrorMessage>(extractMessage(e, webRequest), HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	protected ResponseEntity<ErrorMessage> handleResourceNotFoundException(
+													ResourceNotFoundException e,
+													WebRequest webRequest) {
+		
+		return new ResponseEntity<ErrorMessage>(extractMessage(e, webRequest), HttpStatus.NOT_FOUND);
+	}
+	
+	
+	
+	/*
+	 * Helper method to extract messages from exceptions
+	 * and wrap them in a generic 'errorMessage' object
+	 */
+	private ErrorMessage extractMessage(RuntimeException e, WebRequest webRequest) {
 		List<String> messages = new ArrayList<String>();
 		messages.add(e.getMessage());
 
-		return new ResponseEntity<Object>(
-				new ErrorMessage(messages, webRequest.getDescription(false)),
-				HttpStatus.CONFLICT);
+		return new ErrorMessage(messages, webRequest.getDescription(false));
 	}
 
 }

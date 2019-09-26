@@ -11,4 +11,6 @@ public interface BlogService {
 
 	BlogDto saveBlog(BlogDto blog);
 
+	BlogDto findById(Long id);
+
 }

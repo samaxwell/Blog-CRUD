@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.blog.crud.converters.ConverterService;
 import com.blog.crud.domain.Blog;
 import com.blog.crud.domain.BlogDto;
+import com.blog.crud.exceptions.ResourceNotFoundException;
 import com.blog.crud.exceptions.UnsatisfiedConstraint;
 import com.blog.crud.repositories.BlogRepository;
 
@@ -20,15 +21,28 @@ public class BlogServiceImpl implements BlogService {
 	
 	@Autowired
 	private BlogRepository repository;
-	private ConverterService converterService;
+	private ConverterService converter;
 	
 	public BlogServiceImpl() {
-		this.converterService = new ConverterService();
+		this.converter = new ConverterService();
 	}
 
 	@Override
 	public List<BlogDto> getAllBlogs() {
-		return converterService.convertAll(repository.findAll());
+		return converter.convertAll(repository.findAll());
+	}
+	
+	@Override
+	public BlogDto findById(Long id) {
+
+		// TODO - test
+		/* Verify blog exists */
+		Optional<Blog> blog = repository.findById(id);//.orElseThrow(() -> new ResourceNotFoundException("no can do"));
+		if(!blog.isPresent()) {
+			throw new ResourceNotFoundException("Cannot find resouce with id '" + id + "'");
+		}
+
+		return converter.convert(blog.get());
 	}
 
 	@Override
@@ -41,9 +55,9 @@ public class BlogServiceImpl implements BlogService {
 			throw new UnsatisfiedConstraint("A blog already exists with the title '" + blog.getTitle() + "'");
 		});
 
-		Blog blog = repository.save(converterService.convert(blogToSave));
+		Blog blog = repository.save(converter.convert(blogToSave));
 
-		return converterService.convert(blog);
+		return converter.convert(blog);
 	}
 
 }
