@@ -23,7 +23,7 @@ public class BlogController {
 	private BlogService blogService;
 	
 	@GetMapping
-	public List<BlogDto> getAllBlogs() {
+	public List<BlogDto> getAllBlog() {
 		return blogService.getAllBlogs();
 	}
 	
